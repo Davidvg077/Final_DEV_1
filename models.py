@@ -124,7 +124,7 @@ class EstadisticaJugadorPartido:
 @dataclasses.dataclass
 class Partido:
     
-
+    """Gestion del partido"""
     _id_counter: ClassVar[int] = 0
 
     id: int = 0
