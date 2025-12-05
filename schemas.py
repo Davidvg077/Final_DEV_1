@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 from datetime import date
 from typing import Optional, List, Dict
 from pydantic import BaseModel, Field, validator
@@ -20,18 +19,6 @@ class JugadorSchema(BaseModel):
     nacionalidad: str
     foto_ruta: Optional[str] = None
     datos_deportivos: Optional[DatosDeportivosSchema] = None
-
-    @validator('nombre_completo')
-    def nombre_no_vacio(cls, v: str) -> str:
-        if not v or not v.strip():
-            raise ValueError('El nombre completo no puede estar vacío')
-        return v.strip()
-
-    @validator('fecha_nacimiento')
-    def fecha_no_futura(cls, v: Optional[date]) -> Optional[date]:
-        if v and v > date.today():
-            raise ValueError('La fecha de nacimiento no puede ser en el futuro')
-        return v
 
 
 class EstadisticaJugadorPartidoSchema(BaseModel):
