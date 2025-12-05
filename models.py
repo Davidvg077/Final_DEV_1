@@ -58,3 +58,27 @@ class Jugador:
         
         }
 
+@dataclasses.dataclass
+class EstadisticaJugadorPartido:
+    """Estadísticas de un jugador en un partido."""
+
+    jugador_id: int
+    fuera_de_lugar: int = 0
+    tarjetas_amarillas: int = 0
+    tarjetas_rojas: int = 0
+    tiros_al_arco: int = 0
+    goles: int = 0
+    posicion_stats: Optional[Dict[str, object]] = None
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.jugador_id, int) or self.jugador_id <= 0:
+            raise TypeError("jugador_id debe ser un entero positivo que identifique al jugador")
+
+        for field_name in ("fuera_de_lugar", "tarjetas_amarillas", "tarjetas_rojas", "tiros_al_arco", "goles"):
+            val = getattr(self, field_name)
+            if not isinstance(val, int) or val < 0:
+                raise ValueError(f"{field_name} debe ser un entero >= 0")
+
+        if self.posicion_stats is not None and not isinstance(self.posicion_stats, dict):
+            raise TypeError("posicion_stats debe ser un diccionario con estadísticas específicas de la posición")
+
